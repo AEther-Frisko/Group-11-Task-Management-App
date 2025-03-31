@@ -15,7 +15,9 @@ public class Main {
 			System.out.println("0) Quit");
 			System.out.println("1) Add task");
 			System.out.println("2) View all tasks");
+			System.out.println("3) Remove a task");
 			int input = in.nextInt();
+			in.nextLine();
 			
 			switch(input) {
 			case 0:
@@ -35,6 +37,22 @@ public class Main {
 					task.displayTask();
 					System.out.println("-----");
 				}
+				break;
+			case 3:
+				System.out.println("Enter the task's name:");
+				String title = in.nextLine();
+				for(Task task : taskList) {
+					if(task.getTitle().equals(title)) {
+						taskList.remove(task);
+						System.out.println("Removed " + title + "(ID " + task.getId() + ") from tasks.");
+					}
+					else {
+						System.out.println("Could not find a task titled: " + title);
+					}
+					break;
+				}
+			default:
+				System.out.println("Invalid input, please try again.");
 			}
 		}
 		in.close();
@@ -48,7 +66,6 @@ public class Main {
 	 * @return The newly created Task.
 	 */
 	public static Task createTask(Scanner in) {
-		in.nextLine();
 		Task newTask = null;
 		TaskBuilder builder = new TaskBuilder();
 		
