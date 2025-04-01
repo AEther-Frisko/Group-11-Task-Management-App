@@ -21,6 +21,7 @@ public class Main {
 			System.out.println("2) View all tasks");
 			System.out.println("3) Remove a task");
 			System.out.println("4) Edit a task");
+			System.out.println("5) Filter tasks by tag");
 			int input = in.nextInt();
 			in.nextLine();
 			
@@ -67,6 +68,16 @@ public class Main {
 					editTask(taskList.get(index1), in);
 				}
 				break;
+			case 5:
+				System.out.println("Enter the tag to filter by:");
+				String tag = in.nextLine();
+				System.out.println("Tasks under " + tag + ":");
+				for(Task task : taskList) {
+					if(task.getTags().contains(tag)) {
+						task.displayTask();
+						System.out.println("-----");
+					}
+				}
 			default:
 				System.out.println("Invalid input, please try again.");
 				break;
