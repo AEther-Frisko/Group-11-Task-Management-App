@@ -2,17 +2,21 @@ package taskManagementApp;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.io.FileNotFoundException;
 import java.time.LocalDate;
 
 public class Main {
-	public static void main(String[] args) {
+	public static void main(String[] args) throws FileNotFoundException, ClassNotFoundException {
 		Scanner in = new Scanner(System.in);
 		ArrayList<Task> taskList = new ArrayList<Task>();
+		
+		FileHandler fileHandler = new FileHandler("tasks.bin");
+		fileHandler.readTasksFromFile(taskList);
 		
 		boolean run = true;
 		while(run) {
 			System.out.println("What would you like to do?");
-			System.out.println("0) Quit");
+			System.out.println("0) Save and Quit");
 			System.out.println("1) Add task");
 			System.out.println("2) View all tasks");
 			System.out.println("3) Remove a task");
@@ -22,6 +26,9 @@ public class Main {
 			
 			switch(input) {
 			case 0:
+				System.out.println("Saving tasks...");
+				fileHandler.writeTasksToFile(taskList);
+				
 				System.out.println("Quitting...");
 				run = false;
 				break;
@@ -46,6 +53,9 @@ public class Main {
 				if (index != -1) {
 					taskList.remove(index);
 					System.out.println("Removed " + title + "(ID " + index + ") from tasks.");
+					for(Task task : taskList) {
+						task.setId(taskList.indexOf(task));
+					}
 				}
 				break;
 			case 4:
