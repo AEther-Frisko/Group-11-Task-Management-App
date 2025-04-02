@@ -1,9 +1,11 @@
 package taskManagementApp;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class Task {
+public class Task implements Serializable {
+	private static final long serialVersionUID = 1L;
 	private int id;
 	private String title;
 	private String description;
@@ -19,6 +21,7 @@ public class Task {
 		this.dueDate = dueDate;
 		this.priority = priority;
 		this.status = status;
+		this.tags = new ArrayList<String>();
 	}
 	
 	public int getId() {
@@ -59,10 +62,15 @@ public class Task {
 	public void addTag(String tag) {
 		tags.add(tag);
 	}
-	public void removeTag(String tag) {
+	public boolean removeTag(String tag) {
 		if (tags.contains(tag)) {
 			tags.remove(tag);
+			return true;
 		}
+		return false;
+	}
+	public void clearTags() {
+		tags.clear();
 	}
 	
 	public Priority getPriority() {
